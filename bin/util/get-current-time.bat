@@ -1,4 +1,4 @@
-REM @echo off
+@echo off
 rem ---------------------------------------------------------------------------
 rem Get current time
 rem

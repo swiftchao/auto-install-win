@@ -8,4 +8,4 @@ rem E-Mail: chaofeibest@163.com
 rem Since: 2016-6-16 00:45:25
 rem ---------------------------------------------------------------------------
 
-C:\Windows\System32\shudown.exe -P
+"C:\Windows\System32\shutdown.exe" -P

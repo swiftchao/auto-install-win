@@ -1,36 +1,42 @@
-REM @echo off
-rem ---------------------------------------------------------------------------
-rem Auto Install/Uninstall functions.bat
-rem
-rem File Name: functions.bat
-rem Author: chaofei
-rem E-Mail: chaofeibest@163.com
-rem Created Time: 2016-6-16 1:37:25
-rem ---------------------------------------------------------------------------
+@echo off
+@rem Licensed to the Apache Software Foundation (ASF) under one or more
+@rem contributor license agreements.  See the NOTICE file distributed with
+@rem this work for additional information regarding copyright ownership.
+@rem The ASF licenses this file to You under the Apache License, Version 2.0
+@rem (the "License"); you may not use this file except in compliance with
+@rem the License.  You may obtain a copy of the License at
+@rem
+@rem     http://www.apache.org/licenses/LICENSE-2.0
+@rem
+@rem Unless required by applicable law or agreed to in writing, software
+@rem distributed under the License is distributed on an "AS IS" BASIS,
+@rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+@rem See the License for the specific language governing permissions and
+@rem limitations under the License.
+
+@rem Author: chaofei
+@rem E-Mail: chaofeibest@163.com
 
 setlocal
-set "CURRENT_DIR=%cd%"
-if "%AUTO_INSTALL_HOME%" == "" set "AUTO_INSTALL_HOME=%CURRENT_DIR:\bin=%"
-if not exist "%AUTO_INSTALL_HOME%\conf\config.bat" goto noConfig
-set "CONFIG=%AUTO_INSTALL_HOME%\conf\config.bat"
-call %CONFIG%
-echo %SOFT_NAME%
 
-echo [%1]
-call :forceDeleteArgsFile %1
-
-:forceDeleteArgsFile
-:forceDeleteArgsFileStart
-if "%1" == "" goto :eof
-if exist “%1” (
-  title Force Delete %1...
-  rd /s /q %1
-  if exist %1 (
-    goto forceDeleteArgsFileStart
-  ) else (
-    goto :eof
-  )
+@rem The root of the auto install installation
+set AUTO_INSTALL_HOME=%~dp0
+@rem Delete the end of the directory
+for %%i in (%AUTO_INSTALL_HOME%.) do (
+  set AUTO_INSTALL_HOME=%%~dpi
+)
+@rem Delete the end of the "\"
+if "%AUTO_INSTALL_HOME:~-1%" == "\" (
+  set AUTO_INSTALL_HOME=%AUTO_INSTALL_HOME:~0,-1%
 )
 
-:noConfig
-cd "%CURRENT_DIR%"
+if exist %AUTO_INSTALL_HOME%\conf\config.bat (
+  call %AUTO_INSTALL_HOME%\conf\config.bat
+) else (
+  @echo Auto install config.bat not found.
+)
+
+echo [%SOFT_NAME%]
+:eof
+
+endlocal

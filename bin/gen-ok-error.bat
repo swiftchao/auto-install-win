@@ -1,5 +1,5 @@
 @echo off
 set /p="This is -- "<nul
-echo  >ERROR & findstr /a:C . ERROR*&del ERROR
+echo  >ERROR & C:\Windows\System32\findstr.exe /a:C . ERROR*&del ERROR
 set /p="This is -- "<nul
-echo  >OK & findstr /a:A . OK*&del OK
+echo  >OK & C:\Windows\System32\findstr.exe /a:A . OK*&del OK

@@ -18,6 +18,9 @@
 @rem E-Mail: chaofeibest@163.com
 
 set "SOFT_NAME=auto-install"
+@rem eg: "set ALL_IPS_USERS_PWDS=ip:domain\user:password,ip:domain\user:password"
+set "ALL_IPS_USERS_PWDS=192.168.0.1:China\Administrator:#AutoInstall!,192.168.8.7:China\Administrator:AutoInstall@"
+@rem set "ALL_IPS_USERS_PWDS="
 
 @rem ------------------------------- split ---------------------------------------
 set "SPLIT_LINE=+================================================================+"

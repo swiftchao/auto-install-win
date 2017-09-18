@@ -39,32 +39,41 @@ if exist %AUTO_INSTALL_HOME%\conf\config.bat (
   @echo Auto install config.bat not found.
 )
 
-:force_delete_args_file
-  set "FILE_TO_BE_DELETED=%1"
-  if not defined FILE_TO_BE_DELETED (
-      goto print_usage
-  )
-  set "FILE_TO_BE_DELETED=%FILE_TO_BE_DELETED:"=%"
-  if exist "%FILE_TO_BE_DELETED%" (
-    set /p=Force Delete "%FILE_TO_BE_DELETED%" -- <nul
-	(
-	  (dir /ad "%FILE_TO_BE_DELETED%" >nul 2>nul) && (rd /s /q "%FILE_TO_BE_DELETED%") || (del "%FILE_TO_BE_DELETED%")
-	) && (@echo  >OK & findstr /a:A . OK*&del OK) || (@echo  >ERROR & findstr /a:C . ERROR*&del ERROR)
-	if exist "%FILE_TO_BE_DELETED%" (
-	  goto force_delete_args_file
-	)
-	goto :eof
+set CMD_LINE_ARGS=%1
+if ""%1""=="""" goto doneStart
+shift
+:getArgs
+if ""%1""=="""" goto doneStart
+set CMD_LINE_ARGS=%CMD_LINE_ARGS% %1
+shift
+goto getArgs
+:doneStart
+
+:kill_args_processes
+  for %%i in (%CMD_LINE_ARGS%) do (
+    call :kill_args_process %%i
   )
 :eof
 
-:print_usage
-  if ""%1"" == """" (
-    @echo %SPLIT_LINE%
-	@echo %WORD_SEGMENTATION% Usage: %0 dir or file                  %WORD_SEGMENTATION%
-	@echo %INTERVAL_SEGMENTATION%
-    @echo %WORD_SEGMENTATION% Example1: %0 "d:\$RECYCLE.BIN"         %WORD_SEGMENTATION%
-    @echo %WORD_SEGMENTATION% Example2: %0 "d:\$RECYCLE.BIN\tmp.txt" %WORD_SEGMENTATION%
-	@echo %SPLIT_LINE%
+:kill_args_process
+  set "PROCESS_TO_BE_KILLED=%1"
+  if not defined PROCESS_TO_BE_KILLED (
+      goto print_usage
   )
-  
+  set "PROCESS_TO_BE_KILLED=%PROCESS_TO_BE_KILLED:"=%"
+  title Kill args process %PROCESS_TO_BE_KILLED%
+  set /p=Kill args process %PROCESS_TO_BE_KILLED% -- <nul
+  C:\Windows\System32\taskkill.exe /f /im %PROCESS_TO_BE_KILLED% /t >nul && (@echo  >OK & C:\Windows\System32\findstr.exe /a:A . OK*&del OK) || (@echo  >ERROR & C:\Windows\System32\findstr.exe /a:C . ERROR*&del ERROR)
+:eof
+
+:print_usage
+  if not defined CMD_LINE_ARGS (
+    @echo %SPLIT_LINE%
+    @echo %WORD_SEGMENTATION% Usage: %0 process                           %WORD_SEGMENTATION%
+	@echo %INTERVAL_SEGMENTATION%
+    @echo %WORD_SEGMENTATION% Example: %0 notepad.exe                     %WORD_SEGMENTATION%
+    @echo %SPLIT_LINE%
+  )
+:eof
+
 endlocal

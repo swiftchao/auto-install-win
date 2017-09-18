@@ -18,7 +18,7 @@
 @rem E-Mail: chaofeibest@163.com
 
 @rem judge sys os language
-date /t | findstr "^[0-9]">nul
+date /t | C:\Windows\System32\findstr.exe "^[0-9]">nul
 if %errorlevel% == 0 (
   rem get time of english os
   for /f "tokens=1 delims=/ " %%i in ("%date%") do set "YEAR=%%i"

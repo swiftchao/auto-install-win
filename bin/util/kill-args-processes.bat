@@ -70,7 +70,7 @@ goto getArgs
   if not defined CMD_LINE_ARGS (
     @echo %SPLIT_LINE%
     @echo %WORD_SEGMENTATION% Usage: %0 process                           %WORD_SEGMENTATION%
-	@echo %INTERVAL_SEGMENTATION%
+    @echo %INTERVAL_SEGMENTATION%
     @echo %WORD_SEGMENTATION% Example: %0 notepad.exe                     %WORD_SEGMENTATION%
     @echo %SPLIT_LINE%
   )

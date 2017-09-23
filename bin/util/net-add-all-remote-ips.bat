@@ -49,8 +49,8 @@ if exist %AUTO_INSTALL_HOME%\conf\config.bat (
         for /f "tokens=3 delims=: " %%m in ("%%i") do (
           title Net add all remote ips of %%j
           set /p=Net add all remote ips of %%j -- <nul
-		  @rem add \\192.168.0.1\IPC$ to avoid input password
-		  @rem net use \\192.168.0.1 #AutoInstall! /user:China\Administrator
+          @rem add \\192.168.0.1\IPC$ to avoid input password
+          @rem net use \\192.168.0.1 #AutoInstall! /user:China\Administrator
           C:\Windows\System32\net.exe use \\%%j %%m /user:%%k && (@echo  >OK & C:\Windows\System32\findstr.exe /a:A . OK*&del OK) || (@echo  >ERROR & C:\Windows\System32\findstr.exe /a:C . ERROR*&del ERROR)
         )
       )

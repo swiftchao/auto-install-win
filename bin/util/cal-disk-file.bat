@@ -1,7 +1,7 @@
 @echo off&setlocal enabledelayedexpansion
-set DISK=E
+set DISK=D
 echo 正在查询%DISK%盘文件的数量，请等待...
-dir /s %DISK%: >files.txt
+dir /s %DISK%:\ >files.txt
     set /a n=2
     for /f "delims=" %%a in (files.txt) do (
       for /l %%b in (%n%,-1,1) do (

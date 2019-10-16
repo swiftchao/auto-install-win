@@ -64,7 +64,7 @@ goto getArgs
   for /f "tokens=5" %%i in ('C:\Windows\System32\NETSTAT.EXE -ano ^| C:\Windows\System32\find ":%PORT_TO_BE_KILLED%" ') do (
     title Kill args process by port %PORT_TO_BE_KILLED% of pid %%i
     set /p=Kill args process by port %PORT_TO_BE_KILLED% of pid %%i -- <nul
-    C:\Windows\System32\taskkill.exe /pid %%i /t >nul && (@echo  >OK & C:\Windows\System32\findstr.exe /a:A . OK*&del OK) || (@echo  >ERROR & C:\Windows\System32\findstr.exe /a:C . ERROR*&del ERROR)
+    C:\Windows\System32\taskkill.exe /pid %%i /t /f >nul && (@echo  >OK & C:\Windows\System32\findstr.exe /a:A . OK*&del OK) || (@echo  >ERROR & C:\Windows\System32\findstr.exe /a:C . ERROR*&del ERROR)
   )
 :eof
 
